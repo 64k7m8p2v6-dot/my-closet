@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101010">
+<title>MY CLOSET</title>
+<style>
+:root{--bg:#0d0d0f;--panel:#171719;--panel2:#202023;--gold:#d5b46b;--gold2:#f0d99e;--text:#f6f4ef;--muted:#aaa7a0;--line:#333238}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:92px}
+header{padding:26px 20px 18px;background:linear-gradient(145deg,#191919,#0d0d0f);border-bottom:1px solid var(--line)}
+.brand{font-size:12px;letter-spacing:5px;color:var(--gold);font-weight:700}.brand span{color:#fff}
+h1{font-size:32px;letter-spacing:2px;margin:7px 0 4px}.sub{font-size:13px;color:var(--muted)}
+main{max-width:760px;margin:auto;padding:18px 16px}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#151517f2;border-top:1px solid var(--line);padding:10px 5px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(15px);z-index:5}
+nav button{background:none;border:0;color:var(--muted);font-size:11px;padding:5px;min-width:65px}nav button b{display:block;font-size:20px;margin-bottom:3px}nav button.active{color:var(--gold2)}
+.section{display:none}.section.active{display:block}
+h2{font-size:21px;margin:5px 0 14px}.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.hero{background:linear-gradient(135deg,#29241a,#171719 65%);border:1px solid #594a2c;border-radius:20px;padding:20px;margin-bottom:16px}
+.hero .eyebrow{color:var(--gold2);font-size:11px;letter-spacing:2px}.hero h2{font-size:24px;margin:8px 0}.hero p{color:#d0cbc0;font-size:13px;line-height:1.5}
+button,.button{cursor:pointer;border:0;border-radius:12px;padding:12px 15px;background:var(--gold);color:#17130b;font-weight:700;font-size:14px}
+button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+button.ghost{background:transparent;color:var(--gold2);border:1px solid #78633a}
+input,select{width:100%;padding:12px;border-radius:11px;background:#101012;color:var(--text);border:1px solid var(--line);margin:6px 0 12px;font-size:14px}
+label{font-size:12px;color:var(--muted)}
+.row{display:flex;gap:9px;align-items:center}.row>*{flex:1}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;min-width:0}
+.item img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#242426;display:block}
+.item .info{padding:10px}.item strong{font-size:13px;display:block}.item small{color:var(--muted)}
+.avatarbox{display:flex;gap:15px;align-items:center}.avatarbox img{width:108px;height:138px;object-fit:cover;border-radius:14px;background:#29292b;border:1px solid var(--line)}
+.avatarplaceholder{width:108px;height:138px;border-radius:14px;background:#252528;display:grid;place-items:center;font-size:42px;color:var(--gold)}
+.look{border:1px solid #645331;background:linear-gradient(135deg,#211d15,#171719);border-radius:18px;padding:17px;margin:12px 0}
+.look h3{margin:0 0 12px;color:var(--gold2)}
+.pills{display:flex;gap:7px;flex-wrap:wrap}.pill{background:#29272a;border:1px solid #454047;border-radius:30px;padding:7px 10px;font-size:12px}
+.empty{text-align:center;padding:28px 12px;color:var(--muted);border:1px dashed var(--line);border-radius:15px}
+.stats{display:flex;gap:10px}.stat{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px}.stat b{display:block;font-size:23px;color:var(--gold2)}.stat small{color:var(--muted)}
+footer{text-align:center;color:#777;font-size:11px;padding:20px}
+</style>
+</head>
+<body>
+<header><div class="brand">MY <span>CLOSET</span></div><h1>IL TUO STILE.</h1><div class="sub">Il tuo armadio, in un unico posto.</div></header>
+<main>
+<section id="home" class="section active">
+ <div class="hero"><div class="eyebrow">IL TUO STYLIST DIGITALE</div><h2>Ogni giorno, un nuovo look.</h2><p>Carica i tuoi capi, organizza il guardaroba e crea combinazioni usando quello che hai già.</p><button onclick="show('outfits')">Crea un outfit&nbsp; →</button></div>
+ <div class="stats"><div class="stat"><b id="countAll">0</b><small>Capi salvati</small></div><div class="stat"><b id="countLooks">0</b><small>Look creati</small></div></div>
+ <div class="card" style="margin-top:14px"><h2>Il tuo avatar</h2><div class="avatarbox"><div id="avatarPreview" class="avatarplaceholder">＋</div><div><strong>La tua foto, il tuo avatar</strong><p class="muted">Aggiungi una tua foto per averla sempre a disposizione nell'app.</p><button class="secondary" onclick="show('avatar')">Imposta avatar</button></div></div></div>
+ <div class="card"><h2>Inizia da qui</h2><p class="muted">Aggiungi qualche capo: più completo sarà il guardaroba, più combinazioni potrai creare.</p><button onclick="show('wardrobe')">＋ Aggiungi vestiti</button></div>
+</section>
+<section id="wardrobe" class="section">
+ <h2>Il mio armadio</h2><p class="muted">Fotografa o scegli un'immagine dalla libreria. Le foto restano salvate su questo dispositivo/browser.</p>
+ <div class="card">
+  <label>Foto del capo</label><input id="clothPhoto" type="file" accept="image/*">
+  <label>Nome del capo</label><input id="clothName" placeholder="Es. Felpa nera Nike">
+  <div class="row"><div><label>Categoria</label><select id="clothCat"><option>Maglia</option><option>Felpa</option><option>Pantaloni</option><option>Scarpe</option><option>Giacca</option><option>Accessori</option><option>Altro</option></select></div><div><label>Colore</label><input id="clothColor" placeholder="Es. Nero"></div></div>
+  <label>Marca (facoltativa)</label><input id="clothBrand" placeholder="Es. Nike">
+  <button type="button" id="addCloth">Salva nel guardaroba</button>
+ </div>
+ <div class="row" style="margin:16px 0 10px"><strong id="wardrobeTitle">I tuoi capi</strong><select id="filterCat" style="margin:0;max-width:145px"><option value="Tutti">Tutte le categorie</option><option>Maglia</option><option>Felpa</option><option>Pantaloni</option><option>Scarpe</option><option>Giacca</option><option>Accessori</option><option>Altro</option></select></div>
+ <div id="clothesGrid" class="grid"></div>
+</section>
+<section id="outfits" class="section">
+ <h2>Genera il tuo outfit</h2><p class="muted">Scegli l'occasione e MY CLOSET proverà a combinare i capi che hai catalogato.</p>
+ <div class="card"><label>Occasione</label><select id="occasion"><option>Casual</option><option>Scuola / lavoro</option><option>Elegante</option><option>Streetwear</option><option>Tempo libero</option></select><button type="button" id="generate" style="width:100%">✨ Genera outfit</button></div>
+ <div id="lookResult" class="empty">Il tuo prossimo look ti aspetta.</div>
+ <div id="savedLooks"></div>
+</section>
+<section id="avatar" class="section">
+ <h2>Il mio avatar</h2><p class="muted">Carica una foto chiara di te. Per ora l'app la usa come riferimento visivo: non cambia ancora i vestiti sulla foto.</p>
+ <div class="card"><div id="avatarLarge" class="empty">Nessuna foto caricata</div><label>Carica la tua foto</label><input id="avatarFile" type="file" accept="image/*"><button type="button" id="saveAvatar">Salva foto avatar</button><p class="muted">Consiglio: scegli una foto recente, ben illuminata e con il viso visibile. Evita di caricare immagini che non vuoi conservare su questo dispositivo.</p></div>
+</section>
+<section id="settings" class="section">
+ <h2>Impostazioni</h2>
+ <div class="card"><strong>Privacy e dati</strong><p class="muted">I dati vengono conservati localmente nel browser di questo dispositivo. Se cancelli i dati del browser o cambi dispositivo, potresti perderli. Esporta una copia di sicurezza.</p><button type="button" id="exportData" class="secondary">Esporta backup JSON</button></div>
+ <div class="card"><strong>Ripristina</strong><p class="muted">Questa operazione elimina capi, avatar e look salvati da questo browser.</p><button type="button" id="clearData" class="ghost">Cancella tutti i dati</button></div>
+ <div class="card"><strong>Versione iniziale</strong><p class="muted">MY CLOSET • Nero, bianco e oro<br>Funzioni disponibili offline dopo il primo caricamento, se il browser conserva il file.</p></div>
+</section>
+</main>
+<nav>
+ <button class="active" data-tab="home"><b>⌂</b>Home</button>
+ <button data-tab="wardrobe"><b>▦</b>Armadio</button>
+ <button data-tab="outfits"><b>✦</b>Outfit</button>
+ <button data-tab="avatar"><b>◉</b>Avatar</button>
+ <button data-tab="settings"><b>⚙</b>Altro</button>
+</nav>
+<footer>MY CLOSET · Il tuo stile, le tue regole.</footer>
+<script>
+const DB='mycloset_v1';
+let state={clothes:[],looks:[],avatar:null};
+function load(){try{const s=JSON.parse(localStorage.getItem(DB));if(s)state={...state,...s}}catch(e){}}
+function save(){try{localStorage.setItem(DB,JSON.stringify(state));}catch(e){alert('Spazio di archiviazione esaurito. Prova con immagini più piccole.');}}
+window.show = function(id){document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));window.scrollTo(0,0);render();}
+function readFile(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function render(){
+ document.getElementById('countAll').textContent=state.clothes.length;document.getElementById('countLooks').textContent=state.looks.length;
+ const av=document.getElementById('avatarPreview');av.innerHTML=state.avatar?`<img src="${state.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:14px">`:'＋';av.className=state.avatar?'':'avatarplaceholder';
+ document.getElementById('avatarLarge').innerHTML=state.avatar?`<img src="${state.avatar}" style="max-width:100%;max-height:420px;object-fit:contain;border-radius:12px">`:'Nessuna foto caricata';
+ const filter=document.getElementById('filterCat')?.value||'Tutti';const list=state.clothes.filter(c=>filter==='Tutti'||c.cat===filter);
+ document.getElementById('clothesGrid').innerHTML=list.length?list.map(c=>`<article class="item"><img src="${c.photo}" alt=""><div class="info"><strong>${escapeHtml(c.name)}</strong><small>${escapeHtml(c.cat)} · ${escapeHtml(c.color||'Colore non indicato')}</small><br><small>${escapeHtml(c.brand||'')}</small><button class="secondary" style="width:100%;padding:8px;margin-top:8px" onclick="removeCloth('${c.id}')">Rimuovi</button></div></article>`).join(''):'<div class="empty" style="grid-column:1/-1">Non hai ancora aggiunto capi in questa categoria.</div>';
+ document.getElementById('savedLooks').innerHTML=state.looks.slice().reverse().map(l=>`<div class="look"><h3>${escapeHtml(l.occasion)} · ${new Date(l.date).toLocaleDateString('it-IT')}</h3><div class="pills">${l.ids.map(id=>{const c=state.clothes.find(x=>x.id===id);return c?`<span class="pill">${escapeHtml(c.name)}</span>`:''}).join('')}</div></div>`).join('');
+}
+function removeCloth(id){if(confirm('Rimuovere questo capo?')){state.clothes=state.clothes.filter(c=>c.id!==id);save();render();}}
+document.querySelectorAll('nav button').forEach(b=>{b.type='button';b.addEventListener('click',()=>window.show(b.dataset.tab));});
+document.addEventListener('click',e=>{const b=e.target.closest('button[onclick]');if(b){const m=b.getAttribute('onclick').match(/show\('([^']+)'\)/);if(m){e.preventDefault();window.show(m[1]);}}});
+document.getElementById('filterCat').addEventListener('change',render);
+document.getElementById('addCloth').addEventListener('click',async()=>{
+ const file=document.getElementById('clothPhoto').files[0],name=document.getElementById('clothName').value.trim();
+ if(!file||!name){alert('Aggiungi una foto e il nome del capo.');return;}
+ const photo=await readFile(file);state.clothes.push({id:crypto.randomUUID(),photo,name,cat:document.getElementById('clothCat').value,color:document.getElementById('clothColor').value.trim(),brand:document.getElementById('clothBrand').value.trim()});save();
+ ['clothPhoto','clothName','clothColor','clothBrand'].forEach(id=>document.getElementById(id).value='');render();alert('Capo aggiunto al guardaroba!');
+});
+document.getElementById('saveAvatar').addEventListener('click',async()=>{const f=document.getElementById('avatarFile').files[0];if(!f){alert('Scegli prima una foto.');return;}state.avatar=await readFile(f);save();render();alert('Foto avatar salvata!');});
+document.getElementById('generate').addEventListener('click',()=>{
+ const cats=['Maglia','Felpa','Pantaloni','Scarpe'];const chosen=[];
+ cats.forEach(cat=>{const arr=state.clothes.filter(c=>c.cat===cat);if(arr.length)chosen.push(arr[Math.floor(Math.random()*arr.length)]);});
+ if(chosen.length<2){document.getElementById('lookResult').innerHTML='<div class="empty">Aggiungi almeno due categorie di capi (ad esempio una felpa e un pantalone) per creare un outfit.</div>';return;}
+ const occasion=document.getElementById('occasion').value;const look={ids:chosen.map(c=>c.id),occasion,date:Date.now()};state.looks.push(look);save();
+ document.getElementById('lookResult').innerHTML=`<div class="look"><h3>✦ Il tuo look ${escapeHtml(occasion.toLowerCase())}</h3><div class="pills">${chosen.map(c=>`<span class="pill">${escapeHtml(c.name)}</span>`).join('')}</div><p class="muted">Abbinamento generato usando i capi del tuo armadio.</p></div>`;render();
+});
+document.getElementById('exportData').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='my-closet-backup.json';a.click();URL.revokeObjectURL(a.href);});
+document.getElementById('clearData').addEventListener('click',()=>{if(confirm('Sei sicuro? Tutti i dati saranno eliminati.')){state={clothes:[],looks:[],avatar:null};save();render();}});
+load();render();
+</script>
+</body></html>
